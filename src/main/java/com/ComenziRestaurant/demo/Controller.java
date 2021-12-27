@@ -16,4 +16,22 @@ public class Controller {
         return mav;
     }
 
+    @GetMapping("/meniu")
+    public ModelAndView meniu(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("meniu");
+
+        return mav;
+    }
+
+    @GetMapping("/comanda")
+    public ModelAndView comanda(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("comanda");
+
+        return mav;
+    }
+
+
+
 }
