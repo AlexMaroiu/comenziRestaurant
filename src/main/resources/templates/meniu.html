@@ -1,5 +1,5 @@
-<!doctype html>
-<html lang="en">
+<!doctype html >
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -48,30 +48,21 @@
     </nav>
     <br/><br/><br/>
 
-    <ol class="list-group list-group-numbered">
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Ciorba</div>
-                ingrediente
-            </div>
-            <span class="badge bg-primary rounded-pill">10 lei</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Snitel</div>
-                Ingrediente
-            </div>
-            <span class="badge bg-primary rounded-pill">15 lei</span>
-        </li>
-        <li class="list-group-item d-flex justify-content-between align-items-start">
-            <div class="ms-2 me-auto">
-                <div class="fw-bold">Cartofi prajiti</div>
-                Cartofi, ulei
-            </div>
-            <span class="badge bg-primary rounded-pill">5 lei</span>
-        </li>
-    </ol>
+    <div class="row justify-content-center">
 
+        <div class="col-md-6">
+            <ol class="list-group list-group-numbered">
+                <li th:each="mancare : ${meniu}" class="list-group-item d-flex justify-content-between align-items-start">
+                    <div class="ms-2 me-auto">
+                        <div class="fw-bold" th:text="${mancare.nume}+' lei'"></div>
+                        <div th:text="${mancare.ingrediente}"/>
+                    </div>
+                    <span class="badge bg-primary rounded-pill" th:text="${mancare.pret}+' lei'"></span>
+                </li>
+
+            </ol>
+        </div>
+    </div>
 
 <!-- Optional JavaScript; choose one of the two! -->
 
