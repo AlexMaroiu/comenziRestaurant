@@ -48,32 +48,22 @@
 </nav>
 <br/><br/><br/>
 
-<div class="container-md ">
     <div class="row justify-content-center">
-        <div class="card col-md-6 mb-4">
-            <form th:action="@{/submitComanda}" method="post" th:object="${comanda}" >
-                <div class="form-floating mb-4 mt-4">
-                    <input type="number" class="form-control" id="cantitate" placeholder="Portii" th:field="${comanda.portii}">
-                    <label for="cantitate">Portii</label>
-                </div>
+        <div class="col-md-3 text-center">
+            <form method="post" th:action="@{/submitComanda}" th:object="${comanda}">
+                <p th:text="${mancare.nume}"/>
                 <div class="form-floating mb-4">
-                    <select  class="form-select" th:field="${comanda.id_mancare}">
-                        <option th:each="mancare : ${meniu}" th:text="${mancare.nume}" th:value="${mancare.id}"></option>
-                    </select>
+                    <input type="number" class="form-control" id="portii" placeholder="Portii" th:field="${comanda.portii}">
+                    <label for="portii">Portii</label>
                 </div>
-
-                <div class="text-center mb-4">
-                    <button class="btn btn-primary" type="submit" >Submit</button>
-                </div>
-
-
+                <input type="hidden" th:value="${mancare.id}" name="id_mancare">
+                <button type="submit" class="btn btn-primary">Comanda</button>
             </form>
+
+
         </div>
+
     </div>
-</div>
-
-
-
 
 <!-- Optional JavaScript; choose one of the two! -->
 

@@ -1,4 +1,4 @@
-package com.ComenziRestaurant.demo;
+package com.ComenziRestaurant.demo.entity;
 
 
 import lombok.Getter;
@@ -21,4 +21,8 @@ public class Comanda {
 
     @Column
     private int portii;
+
+    public Comanda(){
+        portii = 1;
+    }
 }

@@ -1,5 +1,7 @@
-package com.ComenziRestaurant.demo;
+package com.ComenziRestaurant.demo.service;
 
+import com.ComenziRestaurant.demo.entity.Comanda;
+import com.ComenziRestaurant.demo.repository.ComandaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

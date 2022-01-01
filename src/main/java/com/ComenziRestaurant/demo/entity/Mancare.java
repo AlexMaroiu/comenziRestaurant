@@ -1,4 +1,4 @@
-package com.ComenziRestaurant.demo;
+package com.ComenziRestaurant.demo.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,4 +24,6 @@ public class Mancare {
     private double pret;
     @Column
     private String ingrediente;
+    @Column
+    private String poza;
 }

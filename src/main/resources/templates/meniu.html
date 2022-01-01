@@ -28,10 +28,10 @@
                             <a class="nav-link active" aria-current="page" href="/">Acasa</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="meniu">Meniu</a>
+                            <a class="nav-link" href="/meniu">Meniu</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="comanda">Comanda</a>
+                            <a class="nav-link" href="/comanda">Comanda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Cont</a>
@@ -48,19 +48,24 @@
     </nav>
     <br/><br/><br/>
 
-    <div class="row justify-content-center">
-
-        <div class="col-md-6">
-            <ol class="list-group list-group-numbered">
-                <li th:each="mancare : ${meniu}" class="list-group-item d-flex justify-content-between align-items-start">
-                    <div class="ms-2 me-auto">
-                        <div class="fw-bold" th:text="${mancare.nume}+' lei'"></div>
-                        <div th:text="${mancare.ingrediente}"/>
+    <div class="row justify-content-center" >
+        <div class="col-md-4">
+            <div class="card mb-3" th:each="mancare : ${meniu}">
+                <div class="card-body text-center">
+                    <img th:src="@{/imagini/{i}.jpg(i=${mancare.poza})}" class="card-img-top" alt="not found" >
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${mancare.nume}"></h5>
+                        <p class="card-text" th:text="${mancare.ingrediente}"></p>
+                        <form method="post" th:action="@{/submitAlege}">
+                            <input type="hidden" th:value="${mancare.id}" name="id">
+                            <button type="submit" class="btn btn-primary">Cumpara</button>
+                        </form>
                     </div>
-                    <span class="badge bg-primary rounded-pill" th:text="${mancare.pret}+' lei'"></span>
-                </li>
-
-            </ol>
+                </div>
+                <div class="card-footer text-center">
+                    <p th:text="${mancare.pret} + ' lei'"></p>
+                </div>
+            </div>
         </div>
     </div>
 

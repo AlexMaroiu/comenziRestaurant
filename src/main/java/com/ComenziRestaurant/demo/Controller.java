@@ -1,12 +1,13 @@
 package com.ComenziRestaurant.demo;
 
+import com.ComenziRestaurant.demo.entity.Comanda;
+import com.ComenziRestaurant.demo.entity.Mancare;
+import com.ComenziRestaurant.demo.service.ComandaService;
+import com.ComenziRestaurant.demo.service.MancareSercive;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.Banner;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -38,6 +39,9 @@ public class Controller {
         List<Mancare> meniu = mancareSercive.getMancare();
         model.addAttribute("meniu", meniu);
 
+        Mancare mancare = new Mancare();
+        model.addAttribute("mancar", mancare);
+
         return mav;
     }
 
@@ -52,6 +56,8 @@ public class Controller {
         Comanda comanda = new Comanda();
         model.addAttribute("comanda", comanda);
 
+
+
         return mav;
     }
 
@@ -62,6 +68,26 @@ public class Controller {
         comandaService.saveComanda(comanda);
 
         mav.setViewName("redirect:/");
+        return mav;
+    }
+
+    @GetMapping("/portii/{mancare}")
+    public ModelAndView portii(@PathVariable("mancare") Integer mancare, Model model){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("portii");
+
+        model.addAttribute("mancare", mancareSercive.getMancareById(mancare));
+
+        Comanda comanda = new Comanda();
+        model.addAttribute("comanda", comanda);
+        return mav;
+    }
+
+    @PostMapping("/submitAlege")
+    public ModelAndView submitAlege(@ModelAttribute Mancare mancar, Model model){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/portii/"+mancar.getId());
+
         return mav;
     }
 
