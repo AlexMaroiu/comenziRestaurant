@@ -5,7 +5,6 @@ import com.ComenziRestaurant.demo.entity.Mancare;
 import com.ComenziRestaurant.demo.service.ComandaService;
 import com.ComenziRestaurant.demo.service.MancareSercive;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -25,8 +24,6 @@ public class Controller {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("home");
 
-
-
         return mav;
     }
 
@@ -34,7 +31,6 @@ public class Controller {
     public ModelAndView meniu(Model model){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("meniu");
-
 
         List<Mancare> meniu = mancareSercive.getMancare();
         model.addAttribute("meniu", meniu);
@@ -55,8 +51,6 @@ public class Controller {
 
         Comanda comanda = new Comanda();
         model.addAttribute("comanda", comanda);
-
-
 
         return mav;
     }
@@ -91,5 +85,12 @@ public class Controller {
         return mav;
     }
 
+    @GetMapping("/logare")
+    public ModelAndView logare(){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("logare");
+
+        return mav;
+    }
 
 }
