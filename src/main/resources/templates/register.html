@@ -16,26 +16,28 @@
     <div class="col-6">
         <div class="position-absolute top-50 start-50 translate-middle">
             <div class="text-center">
-                <p>Logare</p>
+                <p>Inregistrare cont</p>
             </div>
-                <form method="post" th:action="@{/logare}">
-                    <div class="form-floating mb-3">
-                        <input class="form-control" type="text" id="user" name="username" placeholder="Utilizator">
-                        <label for="user">Utilizator</label>
-                    </div>
-                    <div class="form-floating mb-3">
-                        <input class="form-control"  type="password" id="password" name="password" placeholder="Parola">
-                        <label for="password">Parola</label>
-                    </div>
-                    <div class="text-center">
-                        <button type="submit" class="btn btn-primary" name="submit"> Logare </button>
-                        <br>
-                        <a th:href="@{/inregistrare}"  class="btn btn-primary">Inregistrare</a>
-                    </div>
+            <form method="post" th:action="@{/submitInregistrare}" th:object="${utilizatorNou}">
+                <div class="form-floating mb-3">
+                    <input class="form-control" type="text" id="user" name="username" placeholder="Nume utilizator" th:field="*{username}">
+                    <label for="user">Nume Utilizator</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control"  type="password" id="password" name="password" placeholder="Parola" th:field="*{parola}">
+                    <label for="password">Parola</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input class="form-control"  type="password" id="cfpassword" name="cfpassword" placeholder="Confirma parola" th:field="*{cfparola}">
+                    <label for="password">Confirma parola</label>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary" name="submit"> Inregistrare </button>
+                </div>
 
-                </form>
-            </div>
+            </form>
         </div>
+    </div>
 
 </div>
 

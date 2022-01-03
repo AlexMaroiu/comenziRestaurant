@@ -1,10 +1,12 @@
 package com.ComenziRestaurant.demo;
 
-import com.ComenziRestaurant.demo.entity.Comanda;
-import com.ComenziRestaurant.demo.entity.Mancare;
+import com.ComenziRestaurant.demo.entity.*;
+import com.ComenziRestaurant.demo.service.AuthotitiesService;
 import com.ComenziRestaurant.demo.service.ComandaService;
 import com.ComenziRestaurant.demo.service.MancareSercive;
+import com.ComenziRestaurant.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,6 +20,12 @@ public class Controller {
     MancareSercive mancareSercive;
     @Autowired
     ComandaService comandaService;
+    @Autowired
+    AuthotitiesService authotitiesService;
+    @Autowired
+    UserService userService;
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ModelAndView homepage(){
@@ -93,4 +101,33 @@ public class Controller {
         return mav;
     }
 
+    @GetMapping("/inregistrare")
+    public ModelAndView inregistrare(Model model){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("register");
+
+        model.addAttribute("utilizatorNou", new UtilizatorNou());
+        return mav;
+    }
+
+    @PostMapping("/submitInregistrare")
+    public ModelAndView submitInregistrare(@ModelAttribute UtilizatorNou utilizatorNou){
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("redirect:/inregistrare");
+
+        if (utilizatorNou.getParola().equals(utilizatorNou.getCfparola())){
+            User user = new User();
+            user.setUsername(utilizatorNou.getUsername());
+            user.setPassword(passwordEncoder.encode(utilizatorNou.getCfparola()));
+            user.setEnabled(true);
+            userService.saveUser(user);
+            Authorities authorities = new Authorities();
+            authorities.setUsername(utilizatorNou.getUsername());
+            authorities.setAuthority("ROLE_USER");
+            authotitiesService.saveAuthorities(authorities);
+            mav.setViewName("redirect:/logare");
+        }
+
+        return mav;
+    }
 }
