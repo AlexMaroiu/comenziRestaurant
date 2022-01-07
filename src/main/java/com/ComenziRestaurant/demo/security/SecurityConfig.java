@@ -9,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
@@ -27,10 +26,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .usersByUsernameQuery("select username, password, enabled" + " from Users" + " where username=?")
                 .authoritiesByUsernameQuery("select username, authority"+ " from Authorities" + " where username=?");
 
-//        auth.inMemoryAuthentication()
-//                .withUser("alex").password(passwordEncoder().encode("pass")).roles("USER")
-//                .and()
-//                .withUser("Alexandru").password(passwordEncoder().encode("parola")).roles("ADMIN", "USER");
     }
 
     @Bean

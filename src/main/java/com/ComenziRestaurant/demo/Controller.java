@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -45,12 +45,14 @@ public class Controller {
 
         Mancare mancare = new Mancare();
         model.addAttribute("mancar", mancare);
+        model.addAttribute("comanda", new Comanda());
 
         return mav;
     }
 
     @GetMapping("/comanda")
-    public ModelAndView comanda(Model model){
+    public ModelAndView comanda(Model model,
+                                @RequestParam(value = "reusit", required = false) boolean reusit){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("comanda");
 
@@ -59,18 +61,18 @@ public class Controller {
 
         Comanda comanda = new Comanda();
         model.addAttribute("comanda", comanda);
+        model.addAttribute("reusit", reusit);
 
         return mav;
     }
 
     @PostMapping("/submitComanda")
-    public ModelAndView submitComanda(@ModelAttribute Comanda comanda){
-        ModelAndView mav = new ModelAndView();
-
+    public ModelAndView submitComanda(HttpServletRequest request, @ModelAttribute Comanda comanda) {
         comandaService.saveComanda(comanda);
 
-        mav.setViewName("redirect:/");
-        return mav;
+        String referer = request.getHeader("Referer");
+        referer = referer.replaceAll("\\?.*", "");
+        return new ModelAndView("redirect:"+ referer + "?reusit=true");
     }
 
     @GetMapping("/portii/{mancare}")
@@ -86,9 +88,9 @@ public class Controller {
     }
 
     @PostMapping("/submitAlege")
-    public ModelAndView submitAlege(@ModelAttribute Mancare mancar, Model model){
+    public ModelAndView submitAlege(@ModelAttribute Mancare mancare, Model model){
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/portii/"+mancar.getId());
+        mav.setViewName("redirect:/portii/"+mancare.getId());
 
         return mav;
     }

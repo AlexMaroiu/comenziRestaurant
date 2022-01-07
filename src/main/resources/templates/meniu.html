@@ -53,21 +53,47 @@
 
     <div class="row justify-content-center" >
         <div class="col-md-4">
-            <div class="card mb-3" th:each="mancare : ${meniu}">
-                <div class="card-body text-center">
-                    <img th:src="@{/imagini/{i}.jpg(i=${mancare.poza})}" class="card-img-top rounded shadow-sm" alt="not found" >
-                    <div class="card-body">
-                        <h5 class="card-title" th:text="${mancare.nume}"></h5>
-                        <p class="card-text" th:text="${mancare.ingrediente}"></p>
-                        <form method="post" th:action="@{/submitAlege}">
-                            <input type="hidden" th:value="${mancare.id}" name="id">
-                            <button type="submit" class="btn btn-primary">Cumpara</button>
-                        </form>
+            <div th:each="mancare : ${meniu}">
+
+
+                <div class="card mb-3" >
+                    <div class="card-body text-center">
+                        <img th:src="@{/imagini/{i}.jpg(i=${mancare.poza})}" class="card-img-top rounded shadow-sm" alt="not found" >
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${mancare.nume}"></h5>
+                            <p class="card-text" th:text="${mancare.ingrediente}"></p>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" th:attr="data-bs-target='#myModal' + ${mancare.id}" class="btn btn-primary">Adauga</button>
+                        </div>
+                    </div>
+                    <div class="card-footer text-center">
+                        <p th:text="${mancare.pret} + ' lei'"></p>
                     </div>
                 </div>
-                <div class="card-footer text-center">
-                    <p th:text="${mancare.pret} + ' lei'"></p>
+
+                <div class="modal fade" id="myModal" th:attr="id='myModal' + ${mancare.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel" th:text="${mancare.nume}"></h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form method="post" th:action="@{/submitComanda}" th:object="${comanda}">
+                                    <div class="form-floating mb-4">
+                                        <input type="number" class="form-control" id="portii" placeholder="Portii" th:field="${comanda.portii}">
+                                        <label for="portii">Portii</label>
+                                    </div>
+                                    <input type="hidden" th:value="${mancare.id}" name="id_mancare">
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Comanda</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
