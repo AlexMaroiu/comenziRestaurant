@@ -10,45 +10,7 @@
     <title>Restaurant</title>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light fixed-top">
-    <div class="container-fluid">
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="/">Acasa</a>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Restaurant</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Acasa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/meniu">Meniu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/comanda">Comanda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Cont</a>
-                    </li>
-
-                </ul>
-                <form class="d-flex">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-                <div class="position-absolute bottom-0 start-0 mb-3 ms-3">
-                    <a th:href="@{/logout}" class="btn btn-warning">Logout</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</nav>
+<nav th:insert="fragments/defaultNav.html :: nav"></nav>
 <br/><br/><br/>
 
 <div class="container-md ">
@@ -72,34 +34,12 @@
 
             </form>
 
-            <div th:if="${reusit}"  id="divReusit"></div>
-
         </div>
     </div>
 </div>
 
-<div class="toast-container position-absolute bottom-0 end-0 p-3">
-    <div class="toast text-white bg-succes" role="alert" aria-live="assertive" aria-atomic="true" id="liveToast">
-        <div class="d-flex">
-            <div class="toast-body">
-                Produsul a fost adaugat cu succes!
-            </div>
-            <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-        </div>
-
-    </div>
-</div>
-
-<script>
-    window.onload = (event) => {
-        var divIf = document.getElementById('divReusit')
-        if (divIf != null){
-            var toastLiveExample = document.getElementById('liveToast')
-            var toast = new bootstrap.Toast(toastLiveExample)
-            toast.show()
-        }
-    }
-</script>
+<div th:replace="fragments/toasts.html :: toastAdaugat"></div>
+<script th:replace="fragments/toasts.html :: toastScript"></script>
 
 
 <!-- Optional JavaScript; choose one of the two! -->

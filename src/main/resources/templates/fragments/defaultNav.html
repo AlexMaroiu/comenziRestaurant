@@ -1,4 +1,4 @@
-<!doctype html >
+<!doctype html>
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
@@ -10,7 +10,7 @@
     <title>Restaurant</title>
 </head>
 <body>
-<nav class="navbar navbar-light bg-light fixed-top">
+<nav class="navbar navbar-light bg-light fixed-top" th:fragment="nav">
     <div class="container-fluid">
 
         <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
@@ -28,10 +28,10 @@
                         <a class="nav-link active" aria-current="page" href="/">Acasa</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/meniu">Meniu</a>
+                        <a class="nav-link" href="meniu">Meniu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/comanda">Comanda</a>
+                        <a class="nav-link" href="comanda">Comanda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Cont</a>
@@ -51,22 +51,7 @@
 </nav>
 <br/><br/><br/>
 
-    <div class="row justify-content-center">
-        <div class="col-md-3 text-center">
-            <form method="post" th:action="@{/submitComanda}" th:object="${comanda}">
-                <p th:text="${mancare.nume}"/>
-                <div class="form-floating mb-4">
-                    <input type="number" class="form-control" id="portii" placeholder="Portii" th:field="${comanda.portii}">
-                    <label for="portii">Portii</label>
-                </div>
-                <input type="hidden" th:value="${mancare.id}" name="id_mancare">
-                <button type="submit" class="btn btn-primary">Comanda</button>
-            </form>
 
-
-        </div>
-
-    </div>
 
 <!-- Optional JavaScript; choose one of the two! -->
 

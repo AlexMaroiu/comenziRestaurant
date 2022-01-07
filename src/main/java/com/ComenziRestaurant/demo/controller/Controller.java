@@ -1,4 +1,4 @@
-package com.ComenziRestaurant.demo;
+package com.ComenziRestaurant.demo.controller;
 
 import com.ComenziRestaurant.demo.entity.*;
 import com.ComenziRestaurant.demo.service.AuthotitiesService;
@@ -20,12 +20,6 @@ public class Controller {
     MancareSercive mancareSercive;
     @Autowired
     ComandaService comandaService;
-    @Autowired
-    AuthotitiesService authotitiesService;
-    @Autowired
-    UserService userService;
-    @Autowired
-    PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ModelAndView homepage(){
@@ -36,7 +30,8 @@ public class Controller {
     }
 
     @GetMapping("/meniu")
-    public ModelAndView meniu(Model model){
+    public ModelAndView meniu(Model model,
+                              @RequestParam(name = "reusit", required = false) boolean reusit){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("meniu");
 
@@ -46,6 +41,7 @@ public class Controller {
         Mancare mancare = new Mancare();
         model.addAttribute("mancar", mancare);
         model.addAttribute("comanda", new Comanda());
+        model.addAttribute("reusit", reusit);
 
         return mav;
     }
@@ -75,17 +71,6 @@ public class Controller {
         return new ModelAndView("redirect:"+ referer + "?reusit=true");
     }
 
-    @GetMapping("/portii/{mancare}")
-    public ModelAndView portii(@PathVariable("mancare") Integer mancare, Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("portii");
-
-        model.addAttribute("mancare", mancareSercive.getMancareById(mancare));
-
-        Comanda comanda = new Comanda();
-        model.addAttribute("comanda", comanda);
-        return mav;
-    }
 
     @PostMapping("/submitAlege")
     public ModelAndView submitAlege(@ModelAttribute Mancare mancare, Model model){
@@ -95,41 +80,9 @@ public class Controller {
         return mav;
     }
 
-    @GetMapping("/logare")
-    public ModelAndView logare(){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("logare");
 
-        return mav;
-    }
-
-    @GetMapping("/inregistrare")
-    public ModelAndView inregistrare(Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("register");
-
-        model.addAttribute("utilizatorNou", new UtilizatorNou());
-        return mav;
-    }
-
-    @PostMapping("/submitInregistrare")
-    public ModelAndView submitInregistrare(@ModelAttribute UtilizatorNou utilizatorNou){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/inregistrare");
-
-        if (utilizatorNou.getParola().equals(utilizatorNou.getCfparola())){
-            User user = new User();
-            user.setUsername(utilizatorNou.getUsername());
-            user.setPassword(passwordEncoder.encode(utilizatorNou.getCfparola()));
-            user.setEnabled(true);
-            userService.saveUser(user);
-            Authorities authorities = new Authorities();
-            authorities.setUsername(utilizatorNou.getUsername());
-            authorities.setAuthority("ROLE_USER");
-            authotitiesService.saveAuthorities(authorities);
-            mav.setViewName("redirect:/logare");
-        }
-
-        return mav;
+    @GetMapping("/test")
+    public ModelAndView test(){
+        return new ModelAndView("test");
     }
 }
