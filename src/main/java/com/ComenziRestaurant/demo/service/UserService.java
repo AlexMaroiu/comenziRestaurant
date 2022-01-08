@@ -17,6 +17,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserByUsername(String username){
+        var result = userRepository.findById(username);
+        return result.orElse(null);
+    }
+
     public void saveUser(User user){
         userRepository.save(user);
     }

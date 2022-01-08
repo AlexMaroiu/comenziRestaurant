@@ -1,19 +1,19 @@
 package com.ComenziRestaurant.demo.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
-@Setter
 @Getter
-@Entity
-@Table(name = "Comanda")
-public class Comanda {
+@Setter
+@Entity(name = "oferte")
+@Table(name = "oferte")
+public class Oferta {
+
     @Id
     @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -21,12 +21,8 @@ public class Comanda {
     private Mancare id_mancare;
 
     @Column
-    private int portii;
+    private int reducere;
 
     @Column
-    private double pret;
-
-    public Comanda(){
-        portii = 1;
-    }
+    private LocalDate valabil;
 }

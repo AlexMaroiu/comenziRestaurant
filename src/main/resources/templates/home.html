@@ -13,8 +13,69 @@
     <nav th:insert="fragments/defaultNav.html :: nav"></nav>
     <br/><br/><br/>
 
+<div class="row justify-content-center">
+    <div class="col-md-4">
 
+        <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active ">
+                    <div th:each="oferta: ${oferte}">
 
+                    <div class="card mb-3" >
+                        <div class="card-body text-center">
+                            <img th:src="@{/imagini/snitel.jpg}" class="card-img-top rounded shadow-sm" alt="not found" >
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${oferta.id_mancare.nume}"></h5>
+                                <p class="card-text" th:text="'oferta valabila pana la '+${oferta.valabil}"></p>
+                                <button type="button" data-bs-toggle="modal" data-bs-target="#myModal" th:attr="data-bs-target='#myModal' + ${oferta.id_mancare.id}" class="btn btn-primary">Adauga</button>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center alert-danger">
+                            <p th:text="${oferta.reducere}*${oferta.id_mancare.pret}/100 + ' lei, pret redus'"></p>
+                        </div>
+                    </div>
+
+                    <div class="modal fade" id="myModal" th:attr="id='myModal' + ${oferta.id_mancare.id}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel" th:text="${oferta.id_mancare.nume}"></h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" th:action="@{/submitComanda}" th:object="${comanda}">
+                                        <div class="form-floating mb-4">
+                                            <input type="number" class="form-control" id="portii" placeholder="Portii" th:field="${comanda.portii}">
+                                            <label for="portii">Portii</label>
+                                        </div>
+                                        <input type="hidden" th:value="${oferta.id_mancare.id}" name="id_mancare">
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Comanda</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+</div>
+
+    <div th:replace="fragments/toasts.html :: toastAdaugat"></div>
+    <script th:replace="fragments/toasts.html :: toastScript"></script>
 <!-- Optional JavaScript; choose one of the two! -->
 
 <!-- Option 1: Bootstrap Bundle with Popper -->

@@ -1,10 +1,7 @@
 package com.ComenziRestaurant.demo.controller;
 
 import com.ComenziRestaurant.demo.entity.*;
-import com.ComenziRestaurant.demo.service.AuthotitiesService;
-import com.ComenziRestaurant.demo.service.ComandaService;
-import com.ComenziRestaurant.demo.service.MancareSercive;
-import com.ComenziRestaurant.demo.service.UserService;
+import com.ComenziRestaurant.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
@@ -20,12 +17,22 @@ public class Controller {
     MancareSercive mancareSercive;
     @Autowired
     ComandaService comandaService;
+    @Autowired
+    OfertaService ofertaService;
+    @Autowired
+    IstoricService istoricService;
+    @Autowired
+    UserService userService;
 
     @GetMapping
-    public ModelAndView homepage(){
+    public ModelAndView homepage(Model model,
+                                 @RequestParam(name = "reusit", required = false) boolean reusit){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("home");
 
+        model.addAttribute("oferte", ofertaService.getOferte());
+        model.addAttribute("comanda", new Comanda());
+        model.addAttribute("reusit", reusit);
         return mav;
     }
 
@@ -64,6 +71,15 @@ public class Controller {
 
     @PostMapping("/submitComanda")
     public ModelAndView submitComanda(HttpServletRequest request, @ModelAttribute Comanda comanda) {
+
+        if(ofertaService.esteInOferta(comanda.getId_mancare())){
+            comanda.setPret(comanda.getId_mancare().getPret()*ofertaService.
+                    gasesteOferta(comanda.getId_mancare()).getReducere()/100*
+                    comanda.getPortii());
+        }
+        else {
+            comanda.setPret(comanda.getId_mancare().getPret()* comanda.getPortii());
+        }
         comandaService.saveComanda(comanda);
 
         String referer = request.getHeader("Referer");
@@ -80,6 +96,14 @@ public class Controller {
         return mav;
     }
 
+    @GetMapping("/cont")
+    public ModelAndView cont(Model model, HttpServletRequest request){
+        String username = request.getUserPrincipal().getName();
+        User user = userService.getUserByUsername(username);
+        model.addAttribute("istoric", istoricService.getIstoricByUser(user));
+
+        return new ModelAndView("cont");
+    }
 
     @GetMapping("/test")
     public ModelAndView test(){
