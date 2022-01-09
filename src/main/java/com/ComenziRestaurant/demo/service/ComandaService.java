@@ -13,6 +13,14 @@ public class ComandaService {
     @Autowired
     ComandaRepository comandaRepository;
 
+    public List<Comanda> gasesteDupaUser(String username){
+        return comandaRepository.gasesteDupaUser(username);
+    }
+
+    public List<Comanda> gasesteGrupat(String username){
+        return comandaRepository.gasesteDupaUserg(username);
+    }
+
     public List<Comanda> getComanda(){
         return comandaRepository.findAll();
     }

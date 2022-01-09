@@ -21,4 +21,8 @@ public class IstoricService {
     public List<Istoric> getIstoricByUser(User user){
         return istoricRepository.getIstoricByUser(user);
     }
+
+    public void save(Istoric istoric){
+        istoricRepository.save(istoric);
+    }
 }

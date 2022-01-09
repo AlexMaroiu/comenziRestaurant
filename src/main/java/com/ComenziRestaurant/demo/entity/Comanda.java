@@ -26,6 +26,9 @@ public class Comanda {
     @Column
     private double pret;
 
+    @Column
+    private String username;
+
     public Comanda(){
         portii = 1;
     }

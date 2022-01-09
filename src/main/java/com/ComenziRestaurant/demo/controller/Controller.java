@@ -3,11 +3,13 @@ package com.ComenziRestaurant.demo.controller;
 import com.ComenziRestaurant.demo.entity.*;
 import com.ComenziRestaurant.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -80,6 +82,7 @@ public class Controller {
         else {
             comanda.setPret(comanda.getId_mancare().getPret()* comanda.getPortii());
         }
+        comanda.setUsername(request.getUserPrincipal().getName());
         comandaService.saveComanda(comanda);
 
         String referer = request.getHeader("Referer");
@@ -103,6 +106,30 @@ public class Controller {
         model.addAttribute("istoric", istoricService.getIstoricByUser(user));
 
         return new ModelAndView("cont");
+    }
+
+    @GetMapping("/cosDeCumparaturi")
+    public ModelAndView cosDeCumparaturi(Model model, HttpServletRequest request){
+        var cos = comandaService.gasesteGrupat(request.getUserPrincipal().getName());
+        model.addAttribute("comenzi", cos);
+        double total = 0;
+        for( var q : cos){
+            total += q.getPret();
+        }
+
+        model.addAttribute("total", total);
+        model.addAttribute("istoric", new Istoric());
+        return new ModelAndView("cosDeCumparaturi");
+    }
+
+    @PostMapping("/submitCos")
+    public ModelAndView submitCos(HttpServletRequest request, @ModelAttribute Istoric istoric){
+        User user = userService.getUserByUsername(request.getUserPrincipal().getName());
+        istoric.setUsername(user);
+        istoric.setData_comanda(LocalDate.now());
+        istoricService.save(istoric);
+
+        return new ModelAndView("redirect:/");
     }
 
     @GetMapping("/test")
