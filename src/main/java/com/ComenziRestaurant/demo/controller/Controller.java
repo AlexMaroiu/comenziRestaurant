@@ -32,7 +32,7 @@ public class Controller {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("home");
 
-        model.addAttribute("oferte", ofertaService.getOferte());
+        model.addAttribute("oferte", ofertaService.gasesteOfertaData(LocalDate.now()));
         model.addAttribute("comanda", new Comanda());
         model.addAttribute("reusit", reusit);
         return mav;

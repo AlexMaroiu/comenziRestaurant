@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import javax.print.attribute.standard.MediaName;
 import javax.transaction.Transactional;
 import java.beans.Transient;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -40,5 +41,9 @@ public class OfertaService {
             return true;
         }
         return false;
+    }
+
+    public List<Oferta> gasesteOfertaData(LocalDate data){
+        return oferteRepository.gasesteOfertaData(data);
     }
 }

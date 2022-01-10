@@ -18,12 +18,26 @@
 
         <div id="carouselExampleControls" class="carousel carousel-dark slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active ">
-                    <div th:each="oferta: ${oferte}">
+                <div class="carousel-item active" >
+                    <div class="card mb-3" >
+                        <div class="card-body text-center">
+                            <img th:src="@{imagini/disc_poza.jpg}" class="card-img-top rounded shadow-sm" alt="not found"/>
+                            <div class="card-body">
+                                <h5 class="card-title" >Ofertele de azi</h5>
+                                <p class="card-text"></p>
+                            </div>
+                        </div>
+                        <div class="card-footer text-center">
+                            <p>Preturile sunt la pret redus</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-item" th:each="oferta: ${oferte}">
+                    <div >
 
                     <div class="card mb-3" >
                         <div class="card-body text-center">
-                            <img th:src="@{/imagini/snitel.jpg}" class="card-img-top rounded shadow-sm" alt="not found" >
+                            <img th:src="@{/imagini/{i}.jpg(i=${oferta.id_mancare.poza})}" class="card-img-top rounded shadow-sm" alt="not found" >
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${oferta.id_mancare.nume}"></h5>
                                 <p class="card-text" th:text="'oferta valabila pana la '+${oferta.valabil}"></p>
@@ -59,7 +73,7 @@
                         </div>
                     </div>
 
-                    </div>
+                </div>
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
