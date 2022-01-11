@@ -29,6 +29,9 @@ public class Comanda {
     @Column
     private String username;
 
+    @Column
+    private boolean finalizat;
+
     public Comanda(){
         portii = 1;
     }

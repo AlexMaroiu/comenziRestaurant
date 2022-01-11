@@ -22,7 +22,7 @@ public class OfertaService {
     }
 
     public Oferta gasesteOferta(Mancare mancare){
-        var gasit = oferteRepository.gasesteIdMancare(mancare);
+        var gasit = oferteRepository.gasesteIdMancare(mancare, LocalDate.now());
         Oferta oferta = null;
         if(gasit.isPresent()){
             oferta = gasit.get();
@@ -31,16 +31,8 @@ public class OfertaService {
     }
 
     public boolean esteInOferta(Mancare mancare){
-        var gasit = oferteRepository.gasesteIdMancare(mancare);
-        Oferta oferta = null;
-        if(gasit.isPresent()){
-            oferta = gasit.get();
-        }
-
-        if(oferta != null){
-            return true;
-        }
-        return false;
+        var gasit = oferteRepository.gasesteIdMancare(mancare, LocalDate.now());
+        return gasit.isPresent();
     }
 
     public List<Oferta> gasesteOfertaData(LocalDate data){

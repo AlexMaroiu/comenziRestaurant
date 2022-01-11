@@ -5,6 +5,7 @@ import com.ComenziRestaurant.demo.repository.ComandaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -18,7 +19,7 @@ public class ComandaService {
     }
 
     public List<Comanda> gasesteGrupat(String username){
-        return comandaRepository.gasesteDupaUserg(username);
+        return comandaRepository.gasesteDupaUserGrupat(username);
     }
 
     public List<Comanda> getComanda(){
@@ -27,5 +28,10 @@ public class ComandaService {
 
     public void saveComanda(Comanda comanda){
         comandaRepository.save(comanda);
+    }
+
+    @Transactional
+    public void golireCos(String user){
+        comandaRepository.updateComanda(user);
     }
 }

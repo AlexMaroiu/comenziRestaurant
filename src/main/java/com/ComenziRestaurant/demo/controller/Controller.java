@@ -124,16 +124,14 @@ public class Controller {
 
     @PostMapping("/submitCos")
     public ModelAndView submitCos(HttpServletRequest request, @ModelAttribute Istoric istoric){
-        User user = userService.getUserByUsername(request.getUserPrincipal().getName());
+        String username = request.getUserPrincipal().getName();
+        User user = userService.getUserByUsername(username);
         istoric.setUsername(user);
         istoric.setData_comanda(LocalDate.now());
         istoricService.save(istoric);
+        comandaService.golireCos(username);
 
         return new ModelAndView("redirect:/");
     }
 
-    @GetMapping("/test")
-    public ModelAndView test(){
-        return new ModelAndView("test");
-    }
 }
