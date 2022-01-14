@@ -30,8 +30,14 @@ public class AdminController {
 
     @PostMapping("/submitAdmin")
     public ModelAndView submitAdmin(@ModelAttribute(name = "oferta") Oferta oferta, RedirectAttributes redirectAttributes){
-        ofertaService.save(oferta);
-        redirectAttributes.addFlashAttribute("mesaj", "Oferta a fost adauata in baza de date");
+
+        if(ofertaService.esteInOferta(oferta.getId_mancare())){
+            redirectAttributes.addFlashAttribute("invalid", "Nu s-a creat oferta. Produsul esta de in oferte");
+        }
+        else {
+            ofertaService.save(oferta);
+            redirectAttributes.addFlashAttribute("mesaj", "Oferta a fost adauata in baza de date");
+        }
         return new ModelAndView("redirect:/admin");
     }
 }

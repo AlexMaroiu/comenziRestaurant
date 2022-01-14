@@ -27,41 +27,28 @@ public class Controller {
 
     @GetMapping
     public ModelAndView homepage(Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("home");
 
         model.addAttribute("oferte", ofertaService.gasesteOfertaData(LocalDate.now()));
         model.addAttribute("comanda", new Comanda());
-        return mav;
+        return new ModelAndView("home");
     }
 
     @GetMapping("/meniu")
     public ModelAndView meniu(Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("meniu");
 
-        List<Mancare> meniu = mancareSercive.getMancare();
-        model.addAttribute("meniu", meniu);
-
-        Mancare mancare = new Mancare();
-        model.addAttribute("mancar", mancare);
+        model.addAttribute("meniu", mancareSercive.getMancare());
+        model.addAttribute("mancar", new Mancare());
         model.addAttribute("comanda", new Comanda());
 
-        return mav;
+        return new ModelAndView("meniu");
     }
 
     @GetMapping("/comanda")
     public ModelAndView comanda(Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("comanda");
+        model.addAttribute("meniu", mancareSercive.getMancare());
+        model.addAttribute("comanda", new Comanda());
 
-        List<Mancare> meniu = mancareSercive.getMancare();
-        model.addAttribute("meniu", meniu);
-
-        Comanda comanda = new Comanda();
-        model.addAttribute("comanda", comanda);
-
-        return mav;
+        return new ModelAndView("comanda");
     }
 
     @PostMapping("/submitComanda")
@@ -74,25 +61,17 @@ public class Controller {
                     comanda.getPortii());
         }
         else {
-            comanda.setPret(comanda.getId_mancare().getPret()* comanda.getPortii());
+            comanda.setPret(comanda.getId_mancare().getPret() * comanda.getPortii());
         }
         comanda.setUsername(request.getUserPrincipal().getName());
         comandaService.saveComanda(comanda);
 
-        String referer = request.getHeader("Referer");
-        //referer = referer.replaceAll("\\?.*", "");
         redirectAttributes.addFlashAttribute("reusit", true);
+
+        String referer = request.getHeader("Referer");
         return new ModelAndView("redirect:"+ referer);
     }
 
-
-    @PostMapping("/submitAlege")
-    public ModelAndView submitAlege(@ModelAttribute Mancare mancare, Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/portii/"+mancare.getId());
-
-        return mav;
-    }
 
     @GetMapping("/cont")
     public ModelAndView cont(Model model, HttpServletRequest request){

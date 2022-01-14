@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @RestController
 public class LoginController {
@@ -26,25 +27,26 @@ public class LoginController {
 
     @GetMapping("/logare")
     public ModelAndView logare(){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("logare");
-
-        return mav;
+        return new ModelAndView("logare");
     }
 
     @GetMapping("/inregistrare")
     public ModelAndView inregistrare(Model model){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("register");
 
         model.addAttribute("utilizatorNou", new UtilizatorNou());
-        return mav;
+        return new ModelAndView("register");
     }
 
     @PostMapping("/submitInregistrare")
-    public ModelAndView submitInregistrare(@ModelAttribute UtilizatorNou utilizatorNou){
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("redirect:/inregistrare");
+    public ModelAndView submitInregistrare(@ModelAttribute UtilizatorNou utilizatorNou,
+                                           RedirectAttributes redirectAttributes){
+
+        ModelAndView mav = new ModelAndView("redirect:/inregistrare");
+        if(userService.existaUsername(utilizatorNou.getUsername())){
+            redirectAttributes.addFlashAttribute("exista", true);
+            return mav;
+        }
+
 
         if (utilizatorNou.getParola().equals(utilizatorNou.getCfparola())){
             User user = new User();
@@ -56,7 +58,8 @@ public class LoginController {
             authorities.setUsername(utilizatorNou.getUsername());
             authorities.setAuthority("ROLE_USER");
             authotitiesService.saveAuthorities(authorities);
-            mav.setViewName("redirect:/logare");
+            redirectAttributes.addFlashAttribute("creat", true);
+            return new ModelAndView("redirect:/logare");
         }
 
         return mav;

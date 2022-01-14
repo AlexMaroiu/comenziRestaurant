@@ -18,12 +18,11 @@ public class OfertaService {
     }
 
     public Oferta gasesteOferta(Mancare mancare){
-        var gasit = oferteRepository.gasesteIdMancare(mancare, LocalDate.now());
-        Oferta oferta = null;
-        if(gasit.isPresent()){
-            oferta = gasit.get();
+        var oferta = oferteRepository.gasesteIdMancare(mancare, LocalDate.now());
+        if(oferta.isPresent()){
+            return oferta.get();
         }
-        return oferta;
+        return null;
     }
 
     public boolean esteInOferta(Mancare mancare){

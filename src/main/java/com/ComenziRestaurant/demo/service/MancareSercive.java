@@ -19,6 +19,6 @@ public class MancareSercive {
 
     public  Mancare getMancareById(Integer id){
         var mancare =  rep.findById(id);
-        return mancare.get();
+        return mancare.isPresent() ? mancare.get() : null;
     }
 }

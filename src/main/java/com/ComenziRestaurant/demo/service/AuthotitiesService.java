@@ -21,7 +21,4 @@ public class AuthotitiesService {
         authoritiesRepository.save(authorities);
     }
 
-    public Authorities getAuthoritiByUsername(String username){
-        return authoritiesRepository.getById(username);
-    }
 }

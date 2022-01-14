@@ -18,7 +18,7 @@
             <div class="text-center">
                 <p>Inregistrare cont</p>
             </div>
-            <form method="post" th:action="@{/submitInregistrare}" th:object="${utilizatorNou}">
+            <form method="post" th:action="@{/submitInregistrare}" th:object="${utilizatorNou}" class="mb-3">
                 <div class="form-floating mb-3">
                     <input class="form-control" type="text" id="user" name="username" placeholder="Nume utilizator" th:field="*{username}">
                     <label for="user">Nume Utilizator</label>
@@ -36,6 +36,7 @@
                 </div>
 
             </form>
+            <div th:if="${exista}" class="alert alert-danger">Exista deja username-ul.</div>
         </div>
     </div>
 

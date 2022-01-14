@@ -50,8 +50,8 @@
                 </div>
             </form>
 
-            <div th:text="${mesaj}" th:if="${mesaj}" class="alert alert-info text-center mx-auto">
-            </div>
+            <div th:text="${mesaj}" th:if="${mesaj}" class="alert alert-info text-center mx-auto"></div>
+            <div th:text="${invalid}" th:if="${invalid}" class="alert alert-danger text-center mx-auto"></div>
         </div>
     </div>
 </div>
