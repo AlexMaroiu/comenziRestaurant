@@ -5,10 +5,6 @@ import com.ComenziRestaurant.demo.entity.Oferta;
 import com.ComenziRestaurant.demo.repository.OferteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.print.attribute.standard.MediaName;
-import javax.transaction.Transactional;
-import java.beans.Transient;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -37,5 +33,9 @@ public class OfertaService {
 
     public List<Oferta> gasesteOfertaData(LocalDate data){
         return oferteRepository.gasesteOfertaData(data);
+    }
+
+    public void save(Oferta oferta){
+        oferteRepository.save(oferta);
     }
 }

@@ -3,11 +3,10 @@ package com.ComenziRestaurant.demo.controller;
 import com.ComenziRestaurant.demo.entity.*;
 import com.ComenziRestaurant.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.List;
@@ -27,20 +26,17 @@ public class Controller {
     UserService userService;
 
     @GetMapping
-    public ModelAndView homepage(Model model,
-                                 @RequestParam(name = "reusit", required = false) boolean reusit){
+    public ModelAndView homepage(Model model){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("home");
 
         model.addAttribute("oferte", ofertaService.gasesteOfertaData(LocalDate.now()));
         model.addAttribute("comanda", new Comanda());
-        model.addAttribute("reusit", reusit);
         return mav;
     }
 
     @GetMapping("/meniu")
-    public ModelAndView meniu(Model model,
-                              @RequestParam(name = "reusit", required = false) boolean reusit){
+    public ModelAndView meniu(Model model){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("meniu");
 
@@ -50,14 +46,12 @@ public class Controller {
         Mancare mancare = new Mancare();
         model.addAttribute("mancar", mancare);
         model.addAttribute("comanda", new Comanda());
-        model.addAttribute("reusit", reusit);
 
         return mav;
     }
 
     @GetMapping("/comanda")
-    public ModelAndView comanda(Model model,
-                                @RequestParam(value = "reusit", required = false) boolean reusit){
+    public ModelAndView comanda(Model model){
         ModelAndView mav = new ModelAndView();
         mav.setViewName("comanda");
 
@@ -66,13 +60,13 @@ public class Controller {
 
         Comanda comanda = new Comanda();
         model.addAttribute("comanda", comanda);
-        model.addAttribute("reusit", reusit);
 
         return mav;
     }
 
     @PostMapping("/submitComanda")
-    public ModelAndView submitComanda(HttpServletRequest request, @ModelAttribute Comanda comanda) {
+    public ModelAndView submitComanda(HttpServletRequest request, @ModelAttribute Comanda comanda,
+                                      RedirectAttributes redirectAttributes) {
 
         if(ofertaService.esteInOferta(comanda.getId_mancare())){
             comanda.setPret(comanda.getId_mancare().getPret()*ofertaService.
@@ -86,8 +80,9 @@ public class Controller {
         comandaService.saveComanda(comanda);
 
         String referer = request.getHeader("Referer");
-        referer = referer.replaceAll("\\?.*", "");
-        return new ModelAndView("redirect:"+ referer + "?reusit=true");
+        //referer = referer.replaceAll("\\?.*", "");
+        redirectAttributes.addFlashAttribute("reusit", true);
+        return new ModelAndView("redirect:"+ referer);
     }
 
 

@@ -19,12 +19,12 @@
             <div class="text-center">
                 <p>Introdu o oferta</p>
             </div>
-            <form class="row g-3 needs-validation" >
+            <form class="row g-3 needs-validation mb-3" id="demoForm" method="post" th:action="@{/submitAdmin}" th:object="${oferta}">
                 <div>
                     <label for="selectMancare" class="form-label">Produs:</label>
-                    <select class="form-select" aria-label="Default select example" id="selectMancare" required>
-                        <option selected disabled>Selecteaza produsul pentru oferta</option>
-                        <option th:value="${mancare.id}" th:each="mancare : ${meniu}" th:text="${mancare.nume}"></option>
+                    <select class="form-select" aria-label="Default select example" id="selectMancare" required th:field="${oferta.id_mancare}">
+                        <option selected disabled value="">Selecteaza produsul pentru oferta</option>
+                        <option  th:each="mancare : ${meniu}" th:text="${mancare.nume}" th:value="${mancare.id}"></option>
                     </select>
                     <div class="invalid-feedback">
                         Alege un produs.
@@ -32,7 +32,7 @@
                 </div>
                 <div>
                     <label for="reducere" class="form-label">Reducere</label>
-                    <input type="number" class="form-control" id="reducere"  required max="100" min="25">
+                    <input type="number" class="form-control" id="reducere"  required max="100" min="25" th:field="${oferta.reducere}">
                     <div class="invalid-feedback">
                         Introdu un numar intre 25-100.
                     </div>
@@ -40,7 +40,7 @@
 
                 <div>
                     <label for="calendar" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="calendar" required min="">
+                    <input type="date" class="form-control" id="calendar" required min="" th:field="${oferta.valabil}">
                     <div class="invalid-feedback">
                         Introdu o data valida.
                     </div>
@@ -49,6 +49,9 @@
                     <button class="btn btn-primary" type="submit">Submit form</button>
                 </div>
             </form>
+
+            <div th:text="${mesaj}" th:if="${mesaj}" class="alert alert-info text-center mx-auto">
+            </div>
         </div>
     </div>
 </div>
@@ -74,6 +77,10 @@
       }, false)
     })
 })()
+</script>
+
+<script>
+    document.getElementById("calendar").min = new Date().toISOString().split("T")[0];
 </script>
 
 <!-- Optional JavaScript; choose one of the two! -->

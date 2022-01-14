@@ -20,4 +20,8 @@ public class AuthotitiesService {
     public void saveAuthorities(Authorities authorities){
         authoritiesRepository.save(authorities);
     }
+
+    public Authorities getAuthoritiByUsername(String username){
+        return authoritiesRepository.getById(username);
+    }
 }
