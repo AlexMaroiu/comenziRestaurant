@@ -1,0 +1,47 @@
+body {
+  background-color: #e6e8e6;
+  background-image: url("/imagini/background.png");
+}
+
+.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 10px 40px;
+}
+
+.flex-item {
+  flex: 0 0 33.33%;
+  padding: 20px;
+}
+
+.btn-adaugare {
+  background-color: #4169e1;
+  border: 3px solid #4169e1;
+  border-radius: 10px;
+}
+
+.card {
+  height: 100%;
+  background-color: #e6e8e6;
+  border: 3px solid #4169e1;
+  border-radius: 10px;
+  box-shadow: -10px 14px 15px 2px rgb(25 25 25 / 60%);
+  transition: all 0.5s;
+}
+
+.card:hover {
+  transform: translateY(-15px);
+  box-shadow: -10px 30px 20px 2px rgb(25 25 25 / 70%);
+}
+
+.card-img {
+  border: 1px solid #ced0ce;
+}
+
+.card-title {
+  text-transform: capitalize;
+}
+
+.card-footer {
+  background-color: #ced0ce;
+}
