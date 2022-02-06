@@ -78,7 +78,7 @@
                   </div>
                   <div class="card-footer text-center alert-danger">
                     <p
-                      th:text="${oferta.reducere}*${oferta.id_mancare.pret}/100 + ' lei, pret redus'"
+                      th:text="(100-${oferta.reducere})/100*${oferta.id_mancare.pret} + ' lei, pret redus'"
                     ></p>
                   </div>
                 </div>
