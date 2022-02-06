@@ -36,7 +36,6 @@ public class Controller {
     public ModelAndView meniu(Model model){
 
         model.addAttribute("meniu", mancareSercive.getMancare());
-        model.addAttribute("mancar", new Mancare());
         model.addAttribute("comanda", new Comanda());
 
         return new ModelAndView("meniu");
