@@ -119,6 +119,22 @@
         border-color: #f15025;
         color: #822208;
       }
+
+      #pass_valid {
+        background-color: rgba(241, 80, 37, 0.3);
+        border: 1px solid #f15025;
+        color: transparent;
+        border-radius: 20px;
+        margin-top: -50px;
+        height: 0px;
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+      }
+
+      .btn-inregistrare {
+        margin-top: 60px;
+      }
     </style>
 
     <title>Restaurant</title>
@@ -182,7 +198,7 @@
             <div id="pass_valid" class="text-center">
               <p>Parolele nu se potrivesc</p>
             </div>
-            <div class="text-center">
+            <div class="text-center div-inregistrare">
               <button
                 id="btn-register"
                 type="submit"
@@ -191,6 +207,12 @@
               >
                 Inregistrare
               </button>
+              <a
+                th:href="@{/login}"
+                id="btn-back"
+                class="btn btn-primary btn-inregistrare"
+                >Inapoi la login</a
+              >
             </div>
           </form>
           <div th:if="${exista}" class="alert alert-danger">
@@ -205,24 +227,37 @@
       const cfparola = document.getElementById("cfpassword");
       const pass_valid = document.getElementById("pass_valid");
       const btn_reg = document.getElementById("btn-register");
+      const btn_back = document.getElementById("btn-back");
 
       cfparola.addEventListener("input", () => {
         if (!(parola.value === cfparola.value)) {
-          pass_valid.style.height = "65px";
+          pass_valid.style.height = "80px";
           btn_reg.disabled = true;
+          btn_reg.style.marginTop = "30px";
+          btn_back.style.marginTop = "30px";
+          pass_valid.style.color = "#822208";
         } else {
           pass_valid.style.height = "0px";
           btn_reg.disabled = false;
+          btn_reg.style.marginTop = "60px";
+          btn_back.style.marginTop = "60px";
+          pass_valid.style.color = "transparent";
         }
       });
 
       parola.addEventListener("input", () => {
         if (!(parola.value === cfparola.value)) {
-          pass_valid.style.height = "65px";
+          pass_valid.style.height = "80px";
           btn_reg.disabled = true;
+          btn_reg.style.marginTop = "30px";
+          btn_back.style.marginTop = "30px";
+          pass_valid.style.color = "#822208";
         } else {
           pass_valid.style.height = "0px";
           btn_reg.disabled = false;
+          btn_reg.style.marginTop = "60px";
+          btn_back.style.marginTop = "60px";
+          pass_valid.style.color = "transparent";
         }
       });
     </script>
