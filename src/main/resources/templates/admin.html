@@ -1,97 +1,150 @@
-<!doctype html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <link rel="stylesheet" href="/stylesheets/defaultNav.css" />
+    <link rel="stylesheet" href="/stylesheets/admin.css" />
 
     <title>Restaurant</title>
-</head>
-<body>
-<nav th:insert="fragments/defaultNav.html :: nav"></nav>
-<br/><br/><br/>
+  </head>
+  <body>
+    <nav th:insert="fragments/defaultNav.html :: nav"></nav>
+    <br /><br /><br />
 
-<div class="container">
-    <div class="row justify-content-center">
+    <div class="container">
+      <div class="row justify-content-center">
         <div>
+          <form
+            class="row g-3 needs-validation mb-3"
+            id="demoForm"
+            method="post"
+            th:action="@{/submitAdmin}"
+            th:object="${oferta}"
+          >
             <div class="text-center">
-                <p>Introdu o oferta</p>
+              <h4>Introdu o oferta</h4>
             </div>
-            <form class="row g-3 needs-validation mb-3" id="demoForm" method="post" th:action="@{/submitAdmin}" th:object="${oferta}">
-                <div>
-                    <label for="selectMancare" class="form-label">Produs:</label>
-                    <select class="form-select" aria-label="Default select example" id="selectMancare" required th:field="${oferta.id_mancare}">
-                        <option selected disabled value="">Selecteaza produsul pentru oferta</option>
-                        <option  th:each="mancare : ${meniu}" th:text="${mancare.nume}" th:value="${mancare.id}"></option>
-                    </select>
-                    <div class="invalid-feedback">
-                        Alege un produs.
-                    </div>
-                </div>
-                <div>
-                    <label for="reducere" class="form-label">Reducere</label>
-                    <input type="number" class="form-control" id="reducere"  required max="100" min="25" th:field="${oferta.reducere}">
-                    <div class="invalid-feedback">
-                        Introdu un numar intre 25-100.
-                    </div>
-                </div>
+            <div class="form-data">
+              <label for="selectMancare" class="form-label">Produs:</label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                id="selectMancare"
+                required
+                th:field="${oferta.id_mancare}"
+              >
+                <option selected disabled value="">
+                  Selecteaza produsul pentru oferta
+                </option>
+                <option
+                  th:each="mancare : ${meniu}"
+                  th:text="${mancare.nume}"
+                  th:value="${mancare.id}"
+                ></option>
+              </select>
+              <div class="invalid-feedback">Alege un produs.</div>
+            </div>
+            <div class="form-data">
+              <label for="reducere" class="form-label">Reducere</label>
+              <input
+                type="number"
+                class="form-control"
+                id="reducere"
+                required
+                max="100"
+                min="25"
+                th:field="${oferta.reducere}"
+              />
+              <div class="invalid-feedback">Introdu un numar intre 25-100.</div>
+            </div>
 
-                <div>
-                    <label for="calendar" class="form-label">Data</label>
-                    <input type="date" class="form-control" id="calendar" required min="" th:field="${oferta.valabil}">
-                    <div class="invalid-feedback">
-                        Introdu o data valida.
-                    </div>
-                </div>
-                <div class="col-12">
-                    <button class="btn btn-primary" type="submit">Submit form</button>
-                </div>
-            </form>
+            <div class="form-data">
+              <label for="calendar" class="form-label">Data</label>
+              <input
+                type="date"
+                class="form-control"
+                id="calendar"
+                required
+                min=""
+                th:field="${oferta.valabil}"
+              />
+              <div class="invalid-feedback">Introdu o data valida.</div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary btn-submit" type="submit">
+                Submit form
+              </button>
+            </div>
+          </form>
 
-            <div th:text="${mesaj}" th:if="${mesaj}" class="alert alert-info text-center mx-auto"></div>
-            <div th:text="${invalid}" th:if="${invalid}" class="alert alert-danger text-center mx-auto"></div>
+          <div
+            th:text="${mesaj}"
+            th:if="${mesaj}"
+            class="alert alert-info text-center mx-auto"
+          ></div>
+          <div
+            th:text="${invalid}"
+            th:if="${invalid}"
+            class="alert alert-danger text-center mx-auto"
+          ></div>
         </div>
+      </div>
     </div>
-</div>
 
+    <script>
+      (function () {
+        "use strict";
 
-<script>
-    (function () {
-  'use strict'
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.querySelectorAll(".needs-validation");
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
+        // Loop over them and prevent submission
+        Array.prototype.slice.call(forms).forEach(function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
 
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      })();
+    </script>
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
-</script>
+    <script>
+      document.getElementById("calendar").min = new Date()
+        .toISOString()
+        .split("T")[0];
+    </script>
 
-<script>
-    document.getElementById("calendar").min = new Date().toISOString().split("T")[0];
-</script>
+    <!-- Optional JavaScript; choose one of the two! -->
 
-<!-- Optional JavaScript; choose one of the two! -->
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
 
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 -->
-</body>
+  </body>
 </html>

@@ -9,7 +9,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 public class Controller {
@@ -37,7 +36,6 @@ public class Controller {
     public ModelAndView meniu(Model model){
 
         model.addAttribute("meniu", mancareSercive.getMancare());
-        model.addAttribute("mancar", new Mancare());
         model.addAttribute("comanda", new Comanda());
 
         return new ModelAndView("meniu");

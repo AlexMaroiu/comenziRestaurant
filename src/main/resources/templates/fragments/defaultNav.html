@@ -1,71 +1,184 @@
-<!doctype html>
-<html lang="en"  xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      .nav-menu-header {
+        background-color: #ced0ce;
+        border-bottom: 2px solid #4169e1;
+        -webkit-box-shadow: 0px 0px 15px 5px rgba(25, 25, 25, 0.4);
+        box-shadow: 0px 0px 15px 5px rgba(25, 25, 25, 0.4);
+      }
+
+      .nav-menu-title {
+        font-size: 34px;
+        letter-spacing: 2px;
+        -webkit-text-fill-color: #ced0ce; /* Will override color (regardless of order) */
+        -webkit-text-stroke-width: 1.5px;
+        -webkit-text-stroke-color: #4169e1;
+      }
+
+      .nav-menu-close {
+        border: 2px solid #4169e1;
+        border-radius: 50%;
+        background-color: #e6e8e6;
+        -webkit-box-shadow: -2px 2px 10px 0px rgba(25, 25, 25, 0.8);
+        box-shadow: -2px 2px 10px 0px rgba(25, 25, 25, 0.8);
+      }
+
+      .nav-menu {
+        background-color: #e6e8e6;
+        font-size: 18;
+      }
+
+      .nav-item:hover {
+        animation: list-select 1s 1;
+        transition: all;
+      }
+
+      .nav-item:before {
+        content: "";
+        width: 2.5px;
+        height: 30px;
+        background-color: #4169e1;
+        display: inline-block;
+        position: absolute;
+        margin-left: -7px;
+        margin-top: 5px;
+      }
+
+      .btn-logout {
+        background-color: #f15025;
+        border: 2px solid #822208;
+        -webkit-box-shadow: 0px 5px 15px 5px rgba(25, 25, 25, 0.4);
+        box-shadow: 0px 5px 15px 5px rgba(25, 25, 25, 0.4);
+      }
+
+      .btn-logout:hover {
+        background-color: #f15025;
+        border: 2px solid #822208;
+        animation: list-select 1s 1;
+      }
+
+      .navbar {
+        background-color: #ced0ce;
+        -webkit-box-shadow: 0px 0px 15px 5px rgba(25, 25, 25, 0.4);
+        box-shadow: 0px 0px 15px 5px rgba(25, 25, 25, 0.4);
+      }
+
+      .navbar-toggler {
+        border: 1px solid #4169e1;
+        -webkit-box-shadow: 0px 0px 10px 1px rgba(25, 25, 25, 0.4);
+        box-shadow: 0px 0px 10px 1px rgba(25, 25, 25, 0.4);
+      }
+
+      @keyframes list-select {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+    </style>
 
     <title>Restaurant</title>
-</head>
-<body>
-<nav class="navbar navbar-light bg-light fixed-top" th:fragment="nav">
-    <div class="container-fluid">
-
-        <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-            <span class="navbar-toggler-icon"></span>
+  </head>
+  <body>
+    <nav class="navbar navbar-light fixed-top" th:fragment="nav">
+      <div class="container-fluid">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasNavbar"
+          aria-controls="offcanvasNavbar"
+        >
+          <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="/">Acasa</a>
-        <a class="navbar-brand" href="/cosDeCumparaturi">Cos</a>
-        <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Restaurant</h5>
-                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <a class="navbar-brand navbar-title" href="/">Acasa</a>
+        <a class="navbar-brand navbar-cos" href="/cosDeCumparaturi">Cos🧺</a>
+        <div
+          class="offcanvas offcanvas-start"
+          tabindex="-1"
+          id="offcanvasNavbar"
+          aria-labelledby="offcanvasNavbarLabel"
+        >
+          <div class="offcanvas-header nav-menu-header">
+            <h5
+              class="offcanvas-title nav-menu-title"
+              id="offcanvasNavbarLabel"
+            >
+              MJP Delivery
+            </h5>
+            <button
+              type="button"
+              class="btn-close text-reset nav-menu-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body nav-menu">
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/"
+                  >🏠Acasa</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="meniu">📖Meniu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="comanda">🧾Comanda</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="cont">👤Cont</a>
+              </li>
+              <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                <a class="nav-link" href="admin">➕Adauga Oferte</a>
+              </li>
+            </ul>
+            <!--                <form class="d-flex">-->
+            <!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
+            <!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
+            <!--                </form>-->
+            <div class="position-absolute bottom-0 start-0 mb-3 ms-3">
+              <a th:href="@{/logout}" class="btn btn-warning btn-logout"
+                >Logout</a
+              >
             </div>
-            <div class="offcanvas-body">
-                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/">Acasa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="meniu">Meniu</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="comanda">Comanda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="cont">Cont</a>
-                    </li>
-                    <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
-                        <a class="nav-link" href="admin">Adauga Oferte</a>
-                    </li>
-
-                </ul>
-<!--                <form class="d-flex">-->
-<!--                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">-->
-<!--                    <button class="btn btn-outline-success" type="submit">Search</button>-->
-<!--                </form>-->
-                <div class="position-absolute bottom-0 start-0 mb-3 ms-3">
-                    <a th:href="@{/logout}" class="btn btn-warning">Logout</a>
-                </div>
-            </div>
+          </div>
         </div>
-    </div>
-</nav>
-<br/><br/><br/>
+      </div>
+    </nav>
+    <br /><br /><br />
 
+    <!-- Optional JavaScript; choose one of the two! -->
 
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
 
-<!-- Optional JavaScript; choose one of the two! -->
-
-<!-- Option 1: Bootstrap Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
-<!-- Option 2: Separate Popper and Bootstrap JS -->
-<!--
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js" integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js" integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous"></script>
 -->
-</body>
+  </body>
 </html>
