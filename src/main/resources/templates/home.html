@@ -49,7 +49,7 @@
             </div>
             <div class="carousel-item" th:each="oferta: ${oferte}">
               <div>
-                <div class="card mb-3">
+                <div class="card">
                   <div class="card-body text-center">
                     <img
                       th:src="@{/imagini/{i}.jpg(i=${oferta.id_mancare.poza})}"
